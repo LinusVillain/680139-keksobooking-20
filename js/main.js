@@ -58,6 +58,26 @@ var generateAdverts = function (count) {
   return array;
 };
 
+var createPin = function (array) {
+  var fragment = document.createDocumentFragment();
+
+  for (var i = 0; i < array.length; i++) {
+
+    var pinElement = pinTemplateContent.cloneNode(true);
+
+    pinElement.style.left = array[i].location.x + 'px';
+    pinElement.style.top = array[i].location.y + 'px';
+
+    var pinImage = pinElement.firstChild;
+
+    pinImage.src = array[i].author.avatar;
+    pinImage.alt = array[i].offer.title;
+    fragment.appendChild(pinElement);
+  }
+
+  return fragment;
+};
+
 adverts = generateAdverts(COUNT);
 
 map.classList.remove('map--faded');
@@ -65,21 +85,5 @@ map.classList.remove('map--faded');
 var mapPinList = document.querySelector('.map__pins');
 var pinTemplateContent = document.querySelector('#pin').content.querySelector('.map__pin');
 
-var pinsFragment = document.createDocumentFragment();
-
-for (var i = 0; i < adverts.length; i++) {
-
-  var pinElement = pinTemplateContent.cloneNode(true);
-
-  pinElement.style.left = adverts[i].location.x + 'px';
-  pinElement.style.top = adverts[i].location.y + 'px';
-
-  var pinImage = pinElement.firstChild;
-
-  pinImage.src = adverts[i].author.avatar;
-  pinImage.alt = adverts[i].offer.title;
-  pinsFragment.appendChild(pinElement);
-
-}
-
+var pinsFragment = createPin(adverts);
 mapPinList.appendChild(pinsFragment);

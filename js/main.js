@@ -1,8 +1,24 @@
 'use strict';
 
 var COUNT = 8;
-var PIN_HEIGHT = 165;
+var PIN_HEIGHT = 70;
 var PIN_HALF_WIDTH = 25;
+
+var types = {
+  palace: {
+    ru: 'дворец'
+  },
+  flat: {
+    ru: 'квартира'
+  },
+  house: {
+    ru: 'дом'
+  },
+  bungalo: {
+    ru: 'бунгало'
+  }
+};
+
 var adverts = [];
 var type = ['palace', 'flat', 'house', 'bungalo'];
 var time = ['12:00', '13:00', '14:00'];
@@ -49,8 +65,8 @@ var generateAdverts = function (count) {
             photos: shuffleArray(photos).slice(0, getRandomInt(0, photos.length))
           },
           location: {
-            x: getRandomInt(1, map.offsetWidth) + PIN_HALF_WIDTH,
-            y: getRandomInt(130, 630) + PIN_HEIGHT
+            x: getRandomInt(1, map.offsetWidth),
+            y: getRandomInt(130, 630)
           }
         }
     );
@@ -58,20 +74,26 @@ var generateAdverts = function (count) {
   return array;
 };
 
+var renderPin = function (array, i) {
+  var pinElement = pinTemplateContent.cloneNode(true);
+
+  pinElement.style.left = array[i].location.x - PIN_HALF_WIDTH + 'px';
+  pinElement.style.top = array[i].location.y - PIN_HEIGHT + 'px';
+
+  var pinImage = pinElement.firstChild;
+
+  pinImage.src = array[i].author.avatar;
+  pinImage.alt = array[i].offer.title;
+
+  return pinElement;
+};
+
 var createPin = function (array) {
   var fragment = document.createDocumentFragment();
 
   for (var i = 0; i < array.length; i++) {
 
-    var pinElement = pinTemplateContent.cloneNode(true);
-
-    pinElement.style.left = array[i].location.x + 'px';
-    pinElement.style.top = array[i].location.y + 'px';
-
-    var pinImage = pinElement.firstChild;
-
-    pinImage.src = array[i].author.avatar;
-    pinImage.alt = array[i].offer.title;
+    var pinElement = renderPin(array, i);
     fragment.appendChild(pinElement);
   }
 

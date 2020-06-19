@@ -42,7 +42,6 @@ var shuffleArray = function (array) {
   return array;
 };
 
-
 var generateAdverts = function (count) {
   var array = [];
   for (var i = 0; i < count; i++) {
@@ -74,30 +73,34 @@ var generateAdverts = function (count) {
   return array;
 };
 
-var renderPin = function (array, i) {
-  var pinElement = pinTemplateContent.cloneNode(true);
+var renderPins = function (pinList, destinationBlock) {
+  var pinFragment = document.createDocumentFragment();
 
-  pinElement.style.left = array[i].location.x - PIN_HALF_WIDTH + 'px';
-  pinElement.style.top = array[i].location.y - PIN_HEIGHT + 'px';
-
-  var pinImage = pinElement.firstChild;
-
-  pinImage.src = array[i].author.avatar;
-  pinImage.alt = array[i].offer.title;
-
-  return pinElement;
-};
-
-var createPin = function (array) {
-  var fragment = document.createDocumentFragment();
-
-  for (var i = 0; i < array.length; i++) {
-
-    var pinElement = renderPin(array, i);
-    fragment.appendChild(pinElement);
+  for (var i = 0; i < pinList.length; i++) {
+    pinFragment.appendChild(pinList[i]);
   }
 
-  return fragment;
+  destinationBlock.appendChild(pinFragment);
+};
+
+var createPins = function (array) {
+  var pinList = [];
+
+  for (var i = 0; i < array.length; i++) {
+    var pinElement = pinTemplateContent.cloneNode(true);
+
+    pinElement.style.left = array[i].location.x - PIN_HALF_WIDTH + 'px';
+    pinElement.style.top = array[i].location.y - PIN_HEIGHT + 'px';
+
+    var pinImage = pinElement.firstChild;
+
+    pinImage.src = array[i].author.avatar;
+    pinImage.alt = array[i].offer.title;
+
+    pinList.push(pinElement);
+  }
+
+  return pinList;
 };
 
 adverts = generateAdverts(COUNT);
@@ -107,5 +110,4 @@ map.classList.remove('map--faded');
 var mapPinList = document.querySelector('.map__pins');
 var pinTemplateContent = document.querySelector('#pin').content.querySelector('.map__pin');
 
-var pinsFragment = createPin(adverts);
-mapPinList.appendChild(pinsFragment);
+renderPins(createPins(adverts), mapPinList);

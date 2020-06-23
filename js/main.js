@@ -4,21 +4,6 @@ var COUNT = 8;
 var PIN_HEIGHT = 70;
 var PIN_HALF_WIDTH = 25;
 
-var types = {
-  palace: {
-    ru: 'дворец'
-  },
-  flat: {
-    ru: 'квартира'
-  },
-  house: {
-    ru: 'дом'
-  },
-  bungalo: {
-    ru: 'бунгало'
-  }
-};
-
 var adverts = [];
 var type = ['palace', 'flat', 'house', 'bungalo'];
 var time = ['12:00', '13:00', '14:00'];

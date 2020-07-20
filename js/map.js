@@ -22,6 +22,7 @@
   };
 
   window.map = {
+    filtersContainer: document.querySelector('.map__filters-container'),
     disablePage: function () {
 
       disableAdvertInputs(true);
@@ -41,6 +42,8 @@
       window.pin.renderPins(window.pin.createPins(adverts), mapPinList);
 
       window.address.setAddress();
+
+      window.card.renderCard(window.card.createCards(adverts[0]), window.data.map, window.map.filtersContainer);
     }
   };
 })();

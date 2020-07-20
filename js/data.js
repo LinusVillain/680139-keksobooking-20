@@ -9,6 +9,12 @@
 
 
   window.data = {
+    typeHousing: {
+      'palace': 'Дворец',
+      'flat': 'Квартира',
+      'house': 'Дом',
+      'bungalo': 'Бунгало'
+    },
     map: document.querySelector('.map'),
     generateAdverts: function (count) {
       var array = [];

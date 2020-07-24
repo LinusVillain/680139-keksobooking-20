@@ -12,8 +12,6 @@
       cardFragment.appendChild(cardElement);
 
       mainBlock.insertBefore(cardFragment, beforeBlock);
-
-      // destinationBlock.appendChild(cardFragment);
     },
     createCards: function (element) {
 

@@ -39,11 +39,56 @@
 
       adverts = window.data.generateAdverts(COUNT);
 
-      window.pin.renderPins(window.pin.createPins(adverts), mapPinList);
+      var pinArray = window.pin.createPins(adverts);
 
+      window.pin.renderPins(pinArray, mapPinList);
+
+      for (var pinIndex = 0; pinIndex < pinArray.length; pinIndex++) {
+        (function () {
+          var advert = adverts[pinIndex];
+          pinArray[pinIndex].addEventListener('mousedown', function (evt) {
+            if (evt.button === 0) {
+              window.card.renderCard(window.card.createCards(advert), window.data.map, window.map.filtersContainer);
+
+              var mapCard = document.querySelector('.map__card');
+              var buttonClose = mapCard.querySelector('.popup__close');
+
+              buttonClose.addEventListener('mousedown', function (evt2) {
+                if (evt2.button === 0) {
+                  mapCard.remove();
+                }
+              });
+
+              document.addEventListener('keydown', function (evt2) {
+                if (evt2.key === 'Escape') {
+                  mapCard.remove();
+                }
+              });
+            }
+          });
+          pinArray[pinIndex].addEventListener('keydown', function (evt) {
+            if (evt.key === 'Enter') {
+              window.card.renderCard(window.card.createCards(advert), window.data.map, window.map.filtersContainer);
+
+              var mapCard = document.querySelector('.map__card');
+              var buttonClose = mapCard.querySelector('.popup__close');
+
+              buttonClose.addEventListener('mousedown', function (evt2) {
+                if (evt2.button === 0) {
+                  mapCard.remove();
+                }
+              });
+
+              document.addEventListener('keydown', function (evt2) {
+                if (evt2.key === 'Escape') {
+                  mapCard.remove();
+                }
+              });
+            }
+          });
+        }());
+      }
       window.address.setAddress();
-
-      window.card.renderCard(window.card.createCards(adverts[0]), window.data.map, window.map.filtersContainer);
     }
   };
 })();

@@ -2,6 +2,24 @@
 
 (function () {
 
+  var minPriceOfType = {
+    'bungalo': 0,
+    'flat': 1000,
+    'house': 5000,
+    'palace': 10000
+  };
+
+  var checkTime = {
+    '12:00': '12:00',
+    '13:00': '13:00',
+    '14:00': '14:00'
+  };
+
+  var inputPrice = document.querySelector('#price');
+  var selectType = document.querySelector('#type');
+  var checkIn = document.querySelector('#timein');
+  var checkOut = document.querySelector('#timeout');
+
   window.map.disablePage();
 
   window.address.mainPin.addEventListener('mousedown', function (evt) {
@@ -15,7 +33,9 @@
   window.address.mainPin.addEventListener('keydown', function (evt) {
 
     if (evt.key === 'Enter') {
-      window.map.enablePage();
+      if (window.data.map.classList.contains('map--faded')) {
+        window.map.enablePage();
+      }
     }
 
   }, {once: true});
@@ -54,4 +74,18 @@
   selectCapacity.addEventListener('change', roomCapacityHandler);
 
   roomCapacityHandler();
+
+  selectType.addEventListener('change', function () {
+    inputPrice.min = minPriceOfType[selectType.value];
+    inputPrice.placeholder = minPriceOfType[selectType.value];
+  });
+
+  checkIn.addEventListener('change', function () {
+    checkOut.value = checkTime[checkIn.value];
+  });
+
+  checkOut.addEventListener('change', function () {
+    checkIn.value = checkTime[checkOut.value];
+  });
+
 })();
